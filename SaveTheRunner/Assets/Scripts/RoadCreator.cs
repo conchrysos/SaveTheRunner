@@ -2,21 +2,40 @@
 using System.Collections;
 
 public class RoadCreator : MonoBehaviour {
-	private int noRoads = 0;
 	public Transform roadPrefab;
 	private bool isCreating;
+	private int roadNo;
 
 	// Use this for initialization
 	void Start () {
 		isCreating = false;
+		roadNo = 0;
+		Object road1 = Instantiate (roadPrefab, new Vector3 (0, 0, 15), Quaternion.identity);
+		road1.name = "Ground-" + roadNo.ToString ();
+		Object road2 = Instantiate (roadPrefab, new Vector3 (0, 0, roadPrefab.transform.position.z + 50.0f), Quaternion.identity);
+		roadNo++;
+		road2.name = "Ground-" + roadNo.ToString ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		GameObject road = GameObject.FindGameObjectWithTag ("Ground");
-		if (road.transform.position.z < -15.0f && !isCreating) {
-			Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 50.0f - road.GetComponent<Road>().getSpeed()), Quaternion.identity);
+		GameObject road = GameObject.Find("Ground-" + (roadNo - 1).ToString());
+		int no = int.Parse (road.name.Split (new char[] { '-'}) [1].ToString());
+		//Debug.Log ("No = " + no + "  % 3 = " + no % 3);
+		// Creates 2 instances of road
+		if (no % 3 == 0 && road.transform.position.z < 0.0f  && !isCreating) {
+			Object newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 100.0f - road.GetComponent<Road> ().getSpeed ()), Quaternion.identity);
+			roadNo++;
+			newRoad.name = "Ground-" + roadNo.ToString ();
+			newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 150.0f - road.GetComponent<Road> ().getSpeed ()), Quaternion.identity);
+			roadNo++;
+			newRoad.name = "Ground-" + roadNo.ToString ();
+			newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 200.0f - road.GetComponent<Road> ().getSpeed ()), Quaternion.identity);
+			roadNo++;
+			newRoad.name = "Ground-" + roadNo.ToString ();
 			isCreating = true;
+		} else {
+			isCreating = false;
 		}
 	}
 }

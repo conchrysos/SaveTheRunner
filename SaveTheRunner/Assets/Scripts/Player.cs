@@ -6,6 +6,8 @@ public class Player : MonoBehaviour {
 	private bool isMovingLeft;
 	private bool isMovingRight;
 	private int i, j;
+	private RaycastHit objectHit;
+
 
 	// Use this for initialization
 	void Start () {
@@ -47,12 +49,23 @@ public class Player : MonoBehaviour {
 				j = 0;
 			}
 		}
+
+		Debug.DrawRay (transform.position, transform.TransformDirection (Vector3.forward) * 50f, Color.green);
+		if (Physics.Raycast (transform.position, transform.TransformDirection (Vector3.forward), out objectHit, 50.0f)) {
+			GameObject target = objectHit.collider.gameObject;
+			if (Vector3.Distance(transform.position, target.transform.position) < 1f) {
+				Debug.Log ("About to Collide with " + target.name);
+			}
+		}
 	}
 
 	void OnCollisionEnter(Collision other) {
 		if (other.gameObject.tag == "Ground") {
-			Debug.Log ("Collides with Ground");
+			//Debug.Log ("Collides with Ground");
 			isJumping = false;
+		}
+		if (other.gameObject.tag == "Obstacle1") {
+			//Debug.Log ("Collides with Obstacle1");
 		}
 	}
 }
