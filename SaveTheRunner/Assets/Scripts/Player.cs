@@ -34,6 +34,10 @@ public class Player : MonoBehaviour {
 			isJumping = true;
 		}
 
+		if (Input.GetKeyDown (KeyCode.Space) && !GameOptions.options.getGameStarted()) {
+			GameOptions.options.setGameStarted (true);
+		}
+
 		if (isMovingLeft) {
 			transform.Translate (new Vector3 (-0.05f, 0.0f, 0.0f));
 			if (i++ >= 19) {
@@ -53,11 +57,14 @@ public class Player : MonoBehaviour {
 		Debug.DrawRay (transform.position, transform.TransformDirection (Vector3.forward) * 50f, Color.green);
 		if (Physics.Raycast (transform.position, transform.TransformDirection (Vector3.forward), out objectHit, 50.0f)) {
 			GameObject target = objectHit.collider.gameObject;
-			if (Vector3.Distance(transform.position, target.transform.position) < 0.5f) {
-				Debug.Log ("About to Collide with " + target.name);
-				this.gameObject.SetActive (false);
-				Destroy (this.gameObject);
+			if (target.tag.StartsWith ("Obstacle")) {
+				Debug.Log ("About to Collide with " + target.name + " Distance = " + Vector3.Distance (transform.position, target.transform.position) + " Speed = " + GameOptions.options.getGameSpeed());
+				if (Vector3.Distance (transform.position, target.transform.position) <= GameOptions.options.getGameSpeed () + 0.5f) {
+					Debug.Log ("Collided with " + target.name);
+					this.gameObject.SetActive (false);
+					Destroy (this.gameObject);
 
+				}
 			}
 		}
 	}

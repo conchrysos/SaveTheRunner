@@ -8,6 +8,7 @@ public class GameOptions : MonoBehaviour {
 	private float maxSpeed = 1.5f;
 	private int frameCount = 0;
 	private int frameChange = 120;
+	private bool gameStarted = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -21,12 +22,13 @@ public class GameOptions : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		frameCount++;
-		//Debug.Log ("Enters Update with frameCount " + frameCount);
-		//if
-		if (frameCount % frameChange == 0) {
-			gameSpeed = gameSpeed + speedChange;
-			Debug.Log ("Speed = " + gameSpeed);
+		if (gameStarted) {
+			frameCount++;
+			if (gameStarted && gameSpeed <= maxSpeed) {
+				if (frameCount % frameChange == 0) {
+					gameSpeed = gameSpeed + speedChange;
+				}
+			}
 		}
 	}
 
@@ -36,5 +38,13 @@ public class GameOptions : MonoBehaviour {
 
 	public void setGameSpeed(float speed) {
 		this.gameSpeed = speed;
+	}
+
+	public void setGameStarted(bool start) {
+		this.gameStarted = start;
+	}
+
+	public bool getGameStarted() {
+		return this.gameStarted;
 	}
 }

@@ -19,9 +19,13 @@ public class RoadCreator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!GameOptions.options.getGameStarted ()) {
+			return;
+		}
+
 		GameObject road = GameObject.Find("Ground-" + (roadNo - 1).ToString());
 		int no = int.Parse (road.name.Split (new char[] { '-'}) [1].ToString());
-		//Debug.Log ("No = " + no + "  % 3 = " + no % 3);
+
 		// Creates 2 instances of road
 		if (no % 3 == 0 && road.transform.position.z < 0.0f  && !isCreating) {
 			Object newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 100.0f - GameOptions.options.getGameSpeed()), Quaternion.identity);
