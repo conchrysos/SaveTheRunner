@@ -24,13 +24,13 @@ public class RoadCreator : MonoBehaviour {
 		//Debug.Log ("No = " + no + "  % 3 = " + no % 3);
 		// Creates 2 instances of road
 		if (no % 3 == 0 && road.transform.position.z < 0.0f  && !isCreating) {
-			Object newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 100.0f - road.GetComponent<Road> ().getSpeed ()), Quaternion.identity);
+			Object newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 100.0f - GameOptions.options.getGameSpeed()), Quaternion.identity);
 			roadNo++;
 			newRoad.name = "Ground-" + roadNo.ToString ();
-			newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 150.0f - road.GetComponent<Road> ().getSpeed ()), Quaternion.identity);
+			newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 150.0f - GameOptions.options.getGameSpeed()), Quaternion.identity);
 			roadNo++;
 			newRoad.name = "Ground-" + roadNo.ToString ();
-			newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 200.0f - road.GetComponent<Road> ().getSpeed ()), Quaternion.identity);
+			newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 200.0f - GameOptions.options.getGameSpeed()), Quaternion.identity);
 			roadNo++;
 			newRoad.name = "Ground-" + roadNo.ToString ();
 			isCreating = true;

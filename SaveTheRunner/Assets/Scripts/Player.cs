@@ -53,8 +53,11 @@ public class Player : MonoBehaviour {
 		Debug.DrawRay (transform.position, transform.TransformDirection (Vector3.forward) * 50f, Color.green);
 		if (Physics.Raycast (transform.position, transform.TransformDirection (Vector3.forward), out objectHit, 50.0f)) {
 			GameObject target = objectHit.collider.gameObject;
-			if (Vector3.Distance(transform.position, target.transform.position) < 1f) {
+			if (Vector3.Distance(transform.position, target.transform.position) < 0.5f) {
 				Debug.Log ("About to Collide with " + target.name);
+				this.gameObject.SetActive (false);
+				Destroy (this.gameObject);
+
 			}
 		}
 	}
