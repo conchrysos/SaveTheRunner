@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+//using UnityEditor;
 
 public class ObstacleCreator : MonoBehaviour {
 	private int randInt;
 	private int randObject;
 	private int obstacleNo;
 	private int no;
-	public Transform obstacle1;
+	public Transform[] obstacles;
 
 	// Use this for initialization
 	void Start () {
 		randInt = (int)Mathf.Round(Random.Range (200.0f, 500.0f));
 		obstacleNo = 0;
 		no = 0;
+		Debug.Log ("ObstacleCreator "  + this.name + " = " + (obstacles.Length));
 	}
 	
 	// Update is called once per frame
@@ -22,9 +23,9 @@ public class ObstacleCreator : MonoBehaviour {
 			return;
 		}
 		if (no == randInt) {
-			randObject = (int)Mathf.Round(Random.Range (1.0f, 2.0f));
-			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath ("Assets/Prefabs/Obstacle" + randObject + ".prefab");
-			Object obstacle = Instantiate (Selection.activeObject, new Vector3 (transform.position.x, transform.position.y - 0.3f, transform.position.z), Quaternion.identity);
+			randObject = (int)Mathf.Round(Random.Range (0.0f, obstacles.Length - 1));
+			Debug.Log ("BS " + (obstacles.Length) + "r = " + randObject);
+			Object obstacle = Instantiate (obstacles[randObject], new Vector3 (transform.position.x, transform.position.y - 0.3f, transform.position.z), Quaternion.identity);
 			obstacle.name = "Obstacle" + randObject + "-" + obstacleNo.ToString ();
 			randInt = (int)Mathf.Round(Random.Range (200.0f, 500.0f));
 			//Debug.Log ("Rand = " + randInt);

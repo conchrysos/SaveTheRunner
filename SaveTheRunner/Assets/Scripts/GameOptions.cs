@@ -27,6 +27,7 @@ public class GameOptions : MonoBehaviour {
 			if (gameStarted && gameSpeed <= maxSpeed) {
 				if (frameCount % frameChange == 0) {
 					gameSpeed = gameSpeed + speedChange;
+					Debug.Log ("Speed = " + gameSpeed);
 				}
 			}
 		}

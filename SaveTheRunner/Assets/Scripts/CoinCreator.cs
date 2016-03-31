@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+//using UnityEditor;
 
 public class CoinCreator : MonoBehaviour {
+	public Transform coins;
 	private RaycastHit objectHit;
 	private int no;
 
@@ -17,8 +18,8 @@ public class CoinCreator : MonoBehaviour {
 			return;
 		}
 		if (no % 150 == 0) {
-			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath ("Assets/Prefabs/Coin.prefab");
-			Object obstacle = Instantiate (Selection.activeObject, new Vector3 (transform.position.x, transform.position.y, transform.position.z), ((GameObject)Selection.activeObject).transform.rotation);
+			//Selection.activeObject = AssetDatabase.LoadMainAssetAtPath ("Assets/Prefabs/Coin.prefab");
+			Object obstacle = Instantiate (coins, new Vector3 (transform.position.x, transform.position.y, transform.position.z), /*((GameObject)Selection.activeObject)*/coins.transform.rotation);
 		}
 		no++;
 	}
