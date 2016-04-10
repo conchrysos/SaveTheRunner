@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class RoadCreator : MonoBehaviour {
-	public Transform roadPrefab;
+	public GameObject roadPrefab;
 	private bool isCreating;
 	private int roadNo;
 

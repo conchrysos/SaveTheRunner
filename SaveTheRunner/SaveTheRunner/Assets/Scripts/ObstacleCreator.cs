@@ -7,7 +7,7 @@ public class ObstacleCreator : MonoBehaviour {
 	private int randObject;
 	private int obstacleNo;
 	private int no;
-	public Transform[] obstacles;
+	public GameObject[] obstacles;
 
 	// Use this for initialization
 	void Start () {

@@ -3,7 +3,7 @@ using System.Collections;
 //using UnityEditor;
 
 public class CoinCreator : MonoBehaviour {
-	public Transform coins;
+	public GameObject coins;
 	public GameObject positioner;
 	private RaycastHit objectHit;
 	private int no, randInt1, randInt2, count, frames;
@@ -45,7 +45,7 @@ public class CoinCreator : MonoBehaviour {
 		//Debug.Log ("BB = " + (int)GameObject.FindGameObjectWithTag ("Positioner").transform.position.z % 5);
 		if (Mathf.Abs((int)positioner.transform.position.z) > no && isProducing) {
 			//Selection.activeObject = AssetDatabase.LoadMainAssetAtPath ("Assets/Prefabs/Coin.prefab");
-			Instantiate (coins, new Vector3 (transform.position.x, transform.position.y, transform.position.z), /*((GameObject)Selection.activeObject)*/coins.transform.rotation);// as GameObject;
+			Instantiate (coins, this.transform.position, /*((GameObject)Selection.activeObject)*/coins.transform.rotation);// as GameObject;
 			//coin.transform.SetParent (GameObject.Find ("Coins").transform);
 			no = no + GameOptions.options.getCoinDistance();
 			if (count++ == randInt1) {
