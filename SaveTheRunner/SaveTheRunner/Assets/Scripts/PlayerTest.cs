@@ -117,13 +117,24 @@ public class PlayerTest : MonoBehaviour {
 		Debug.DrawRay (transform.position, transform.TransformDirection (Vector3.forward) * 50f, Color.green);
 		if (Physics.Raycast (transform.position, transform.TransformDirection (Vector3.forward), out objectHit, 50.0f)) {
 			GameObject target = objectHit.collider.gameObject;
-			if (target.tag.StartsWith ("Obstacle")) {
+			if (target.tag.StartsWith ("Obstacle1")) {
 				//Debug.Log ("About to Collide with " + target.name + " Distance = " + Vector3.Distance (transform.position, target.transform.position) + " Speed = " + GameOptions.options.getGameSpeed());
 				if (Vector3.Distance (transform.position, target.transform.position) <= GameOptions.options.getGameSpeed () + 0.5f) {
 					//Debug.Log ("Collided with " + target.name);
 					//this.gameObject.SetActive (false);
 					//Destroy (this.gameObject);
-
+					Time.timeScale = 0;
+					GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text>().enabled = true;
+				}
+			}
+			if (target.tag.Equals ("Obstacle2")) {
+				//Debug.Log ("About to Collide with " + target.name + " Distance = " + Vector3.Distance (transform.position, target.transform.position) + " Speed = " + GameOptions.options.getGameSpeed());
+				if (Vector3.Distance (transform.position, target.transform.position) <= GameOptions.options.getGameSpeed () + 1f) {
+					//Debug.Log ("Collided with " + target.name);
+					//this.gameObject.SetActive (false);
+					//Destroy (this.gameObject);
+					Time.timeScale = 0;
+					GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text>().enabled = true;
 				}
 			}
 			if (target.tag.Equals ("Coin")) {

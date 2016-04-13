@@ -25,6 +25,9 @@ public class PowerUpsCreator : MonoBehaviour {
 		if (no == randInt) {
 			randObject = (int)Mathf.Round(Random.Range (0.0f, powerUps.Length - 1));
 			Object powerUp = Instantiate (powerUps[randObject], new Vector3 (transform.position.x, transform.position.y - 0.3f, transform.position.z), Quaternion.identity);
+			if (((GameObject)powerUp).tag.Equals ("PowerUpShield")) {
+				((GameObject)powerUp).transform.Rotate (new Vector3 (0f, 180f, 0f));
+			}
 			powerUp.name = "PowerUp" + randObject.ToString () + "-" + powerUpNo.ToString ();
 			randInt = (int)Mathf.Round(Random.Range (200.0f, 500.0f));
 			//Debug.Log ("Rand = " + randInt);

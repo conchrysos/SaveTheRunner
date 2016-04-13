@@ -12,7 +12,11 @@ public class PowerUp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (isOnGround) {
-			transform.Translate (0.0f, 0.0f, -GameOptions.options.getGameSpeed ());
+			if(this.gameObject.tag.Equals("PowerUpShield")) {
+				transform.Translate (0.0f, 0.0f, GameOptions.options.getGameSpeed ());
+			} else {
+				transform.Translate (0.0f, 0.0f, -GameOptions.options.getGameSpeed ());
+			}
 			//transform.Rotate (new Vector3 (0, -15, 0));
 		}
 
@@ -26,9 +30,9 @@ public class PowerUp : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider other){
+	void OnCollisionEnter(Collision other){
 		if (other.gameObject.tag == "Road") {
-			GetComponent<Collider> ().isTrigger = false;
+			//GetComponent<Collider> ().isTrigger = false;
 			isOnGround = true;
 		}  else if (other.gameObject.tag.StartsWith("Obstacle")) {
 			Destroy (this.gameObject);
