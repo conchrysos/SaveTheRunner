@@ -57,11 +57,13 @@
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\PlayerTest.cs" />
      <Compile Include="Assets\Scripts\Positioner.cs" />
+     <Compile Include="Assets\Scripts\PowerUp.cs" />
      <Compile Include="Assets\Scripts\PowerUpsCreator.cs" />
      <Compile Include="Assets\Scripts\Road.cs" />
      <Compile Include="Assets\Scripts\RoadCreator.cs" />
      <None Include="Assets\Toon Zombie S\TSF\Shaders\TSFOutline.shader" />
      <None Include="Assets\Toon Zombie S\TSF\Shaders\TSF.shader" />
+     <None Include="Assets\PowerUps Vol 1 Free\Readme.txt" />
      <None Include="Assets\Ornamental Flower Set\Shaders\Transparent-BumpSpecNoCull.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

@@ -12,7 +12,7 @@ public class PowerUpsCreator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		randInt = (int)Mathf.Round(Random.Range (200.0f, 700.0f));
+		randInt = (int)Mathf.Round(Random.Range (200.0f, 500.0f));
 		powerUpNo = 0;
 		no = 0;
 	}
@@ -24,15 +24,13 @@ public class PowerUpsCreator : MonoBehaviour {
 		}
 		if (no == randInt) {
 			randObject = (int)Mathf.Round(Random.Range (0.0f, powerUps.Length - 1));
-			Object obstacle = Instantiate (obstacles[randObject], new Vector3 (transform.position.x, transform.position.y - 0.3f, transform.position.z), Quaternion.identity);
-			obstacle.name = "Obstacle" + randObject + "-" + obstacleNo.ToString ();
+			Object powerUp = Instantiate (powerUps[randObject], new Vector3 (transform.position.x, transform.position.y - 0.3f, transform.position.z), Quaternion.identity);
+			powerUp.name = "PowerUp" + randObject.ToString () + "-" + powerUpNo.ToString ();
 			randInt = (int)Mathf.Round(Random.Range (200.0f, 500.0f));
 			//Debug.Log ("Rand = " + randInt);
 			no = 0;
-			obstacleNo++;
+			powerUpNo++;
 		}
 		no++;
-	}
-	
 	}
 }

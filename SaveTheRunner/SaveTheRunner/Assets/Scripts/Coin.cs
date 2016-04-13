@@ -13,7 +13,7 @@ public class Coin : MonoBehaviour {
 	void Update () {
 		if (isOnGround) {
 			transform.Translate (0.0f, -GameOptions.options.getGameSpeed (), 0.0f);
-			transform.Rotate (new Vector3 (0, -15, 0) * Time.deltaTime);
+			transform.Rotate (new Vector3 (0, -15, 0));
 		}
 
 		if (transform.position.z < -10.0f /*|| /*transform.position.y > 0.25f ||*/ ) {
