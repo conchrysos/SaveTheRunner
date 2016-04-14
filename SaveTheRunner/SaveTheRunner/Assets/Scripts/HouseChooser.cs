@@ -13,7 +13,9 @@ public class HouseChooser : MonoBehaviour {
 		i = 0;
 
 		GameObject house = Instantiate (houses [randObject], new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity) as GameObject;
-		//house.transform.Rotate (new Vector3 (0f, 180f, 0f));
+		if (transform.parent.name.StartsWith("HouseLeft")) {
+			house.transform.Rotate (new Vector3 (0f, 180f, 0f));
+		}
 		//house.transform.rotation= Quaternion.EulerAngles(0,0,0);
 		house.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
 		house.transform.SetParent (this.transform.parent);
