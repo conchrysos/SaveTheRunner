@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\House.cs" />
      <Compile Include="Assets\Scripts\HouseChooser.cs" />
      <Compile Include="Assets\Scripts\HouseCreator.cs" />
+     <Compile Include="Assets\Scripts\HouseRotation.cs" />
      <Compile Include="Assets\Scripts\Obstacle1.cs" />
      <Compile Include="Assets\Scripts\ObstacleCreator.cs" />
      <Compile Include="Assets\Scripts\Path.cs" />

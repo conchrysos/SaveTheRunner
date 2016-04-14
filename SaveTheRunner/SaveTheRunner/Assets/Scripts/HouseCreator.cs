@@ -10,7 +10,6 @@ public class HouseCreator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		positioner.GetComponent<Positioner> ().setMove (true);
 		randInt1 = (int)Mathf.Round(Random.Range (3.0f, 50.0f));
 		randInt2 = (int)Mathf.Round(Random.Range (1000.0f, 3000.0f));
 		//Debug.Log ("Coins = " + randInt1 + " Frames = " + randInt2);
@@ -33,6 +32,7 @@ public class HouseCreator : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
+			positioner.GetComponent<Positioner> ().setMove (true);
 			isStarted = true;
 		}
 
