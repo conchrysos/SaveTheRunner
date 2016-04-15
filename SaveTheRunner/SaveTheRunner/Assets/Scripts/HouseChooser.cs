@@ -30,7 +30,7 @@ public class HouseChooser : MonoBehaviour {
 	void Update () {
 		if (i == 1)
 			return;
-		Debug.Log (this.transform.parent.name);
+		//Debug.Log (this.transform.parent.name);
 //		if (this.transform.parent.transform.rotation.y == 180f) {
 //			//this.transform.Rotate (new Vector3 (0f, 180f, 0f));
 //

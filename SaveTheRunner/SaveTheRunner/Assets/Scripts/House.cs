@@ -10,6 +10,9 @@ public class House : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (!GameOptions.options.getGameStarted ()) {
+			return;
+		}
 		if (transform.rotation.y == 0f) {
 			transform.Translate (0.0f, 0.0f, -GameOptions.options.getGameSpeed ());
 		} else {

@@ -75,7 +75,7 @@ public class Player : MonoBehaviour {
 //			GetComponent<Rigidbody> ().velocity = new Vector3(1.0f, 0.0f, 0.0f) * 5.0f * GameOptions.options.getGameSpeed();
 			float distCovered = (Time.time - startTime) * 2.0f * speed;
 			float fracJourney = distCovered / moveLength;
-			Debug.Log ("MovesRight");
+			//Debug.Log ("MovesRight");
 			//Debug.Log ("MOVES " + distCovered + "    " + fracJourney + " --- " + Mathf.Abs(transform.position.x - (startPosition + Vector3.right).x));
 			transform.position = Vector3.Lerp(transform.position, startPosition + Vector3.right, fracJourney);
 			//if (transform.position.x - prevPosXRight > 1.0f) {
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour {
 			//			GetComponent<Rigidbody> ().velocity = new Vector3(1.0f, 0.0f, 0.0f) * 5.0f * GameOptions.options.getGameSpeed();
 			float distCovered = (Time.time - startTime) * 5.0f * speed;
 			float fracJourney = distCovered / moveLength;
-			Debug.Log ("MovesRight");
+			//Debug.Log ("MovesRight");
 			//Debug.Log ("MOVES " + distCovered + "    " + fracJourney + " --- " + Mathf.Abs(transform.position.x - (startPosition + Vector3.right).x));
 			transform.position = Vector3.Lerp(transform.position, new Vector3(startPosition.x + 1.0f, origY, transform.position.z), fracJourney);
 			//if (transform.position.x - prevPosXRight > 1.0f) {

@@ -81,7 +81,7 @@ public class PlayerTest : MonoBehaviour {
 			//			GetComponent<Rigidbody> ().velocity = new Vector3(1.0f, 0.0f, 0.0f) * 5.0f * GameOptions.options.getGameSpeed();
 			float distCovered = (Time.time - startTime) * 2.0f * speed;
 			float fracJourney = distCovered / moveLength;
-			Debug.Log ("MovesRight");
+			//Debug.Log ("MovesRight");
 			//Debug.Log ("MOVES " + distCovered + "    " + fracJourney + " --- " + Mathf.Abs(transform.position.x - (startPosition + Vector3.right).x));
 			transform.position = Vector3.Lerp(transform.position, new Vector3(moves[laneNo], transform.position.y, transform.position.z), fracJourney);
 			//if (transform.position.x - prevPosXRight > 1.0f) {
@@ -102,7 +102,7 @@ public class PlayerTest : MonoBehaviour {
 			//			GetComponent<Rigidbody> ().velocity = new Vector3(1.0f, 0.0f, 0.0f) * 5.0f * GameOptions.options.getGameSpeed();
 			float distCovered = (Time.time - startTime) * 5.0f * speed;
 			float fracJourney = distCovered / moveLength;
-			Debug.Log ("MovesRight");
+			//Debug.Log ("MovesRight");
 			//Debug.Log ("MOVES " + distCovered + "    " + fracJourney + " --- " + Mathf.Abs(transform.position.x - (startPosition + Vector3.right).x));
 			transform.position = Vector3.Lerp(transform.position, new Vector3(startPosition.x + 1.0f, origY, transform.position.z), fracJourney);
 			//if (transform.position.x - prevPosXRight > 1.0f) {
@@ -158,6 +158,8 @@ public class PlayerTest : MonoBehaviour {
 			isMovingLeft = true;
 			startTime = Time.time;
 			laneNo--;
+			if (laneNo < 0)
+				laneNo = 0;
 			//transform.Translate(new Vector3 (-1.0f, 0.0f, 0.0f));
 		}
 
@@ -170,6 +172,8 @@ public class PlayerTest : MonoBehaviour {
 			isMovingRight = true;
 			startTime = Time.time;
 			laneNo++;
+			if (laneNo > 2)
+				laneNo = 2;
 		}
 
 		if (Input.GetKeyDown (KeyCode.UpArrow) && !isJumping) {

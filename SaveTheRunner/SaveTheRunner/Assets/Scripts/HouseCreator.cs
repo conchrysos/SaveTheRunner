@@ -16,7 +16,7 @@ public class HouseCreator : MonoBehaviour {
 		count = 0;
 		frames = 0;
 		no = 0;
-		houseNo = 0;
+		houseNo = 1;
 		isProducing = true;
 		isStarted = false;
 	}
@@ -27,25 +27,27 @@ public class HouseCreator : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		if (!GameOptions.options.getGameStarted ()) {
-			return;
-		}
-
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			positioner.GetComponent<Positioner> ().setMove (true);
-			isStarted = true;
-		}
-
-		if (!isStarted) {
-			return;
-		}
-			
+//		if (!GameOptions.options.getGameStarted ()) {
+//			return;
+//		}
+//
+//		if (Input.GetKeyDown (KeyCode.Space)) {
+//			positioner.GetComponent<Positioner> ().setMove (true);
+//			isStarted = true;
+//		}
+//
+//		if (!isStarted) {
+//			return;
+//		}
+		if(GameObject.FindGameObjectsWithTag("HouseWithGarden").Length < 160){	
 		//Debug.Log ("BB = " + (int)GameObject.FindGameObjectWithTag ("Positioner").transform.position.z % 5);
-		if (Mathf.Abs((int)positioner.transform.position.z) >= no && isProducing) {
+		//if (Mathf.Abs((int)positioner.transform.position.z) >= no && isProducing) {
 			//Selection.activeObject = AssetDatabase.LoadMainAssetAtPath ("Assets/Prefabs/Coin.prefab");
-			GameObject house1 = Instantiate (house, this.transform.position, /*((GameObject)Selection.activeObject)*/Quaternion.identity) as GameObject;
+		
+			Vector3 pos = new Vector3 (this.transform.position.x, this.transform.position.y, GameObject.Find ("HouseRight-" + (houseNo - 1).ToString ()).transform.position.z + 3f);
+			GameObject house1 = Instantiate (house, pos, /*((GameObject)Selection.activeObject)*/Quaternion.identity) as GameObject;
 			house1.name = "HouseRight-" + houseNo.ToString ();
-			GameObject house2 = Instantiate (house, this.transform.position, /*((GameObject)Selection.activeObject)*/Quaternion.identity) as GameObject;
+			GameObject house2 = Instantiate (house, pos, /*((GameObject)Selection.activeObject)*/Quaternion.identity) as GameObject;
 			house2.name = "HouseLeft-" + houseNo.ToString ();
 			house2.transform.Rotate (new Vector3 (0f, 180f, 0f));
 			//house2.transform.GetChild (4).transform.Rotate (new Vector3 (0f, 180f, 0f));
