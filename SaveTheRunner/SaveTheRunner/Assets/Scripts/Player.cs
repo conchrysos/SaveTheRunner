@@ -122,7 +122,7 @@ public class Player : MonoBehaviour {
 				if (Vector3.Distance (transform.position, target.transform.position) <= GameOptions.options.getGameSpeed () + 0.5f) {
 					target.SetActive (false);
 					Destroy (target.gameObject);
-					GameOptions.options.addCoinsToCollection (1);
+					GameOptions.options.addCoinsToThisRun (1);
 					//GameObject.FindGameObjectWithTag ("CoinsText").GetComponent<Text> ().text = "Coins: " + GameOptions.options.getCoinsCollected ();
 				}
 			}

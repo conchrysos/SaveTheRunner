@@ -116,24 +116,19 @@ public class PlayerTest : MonoBehaviour {
 		Debug.DrawRay (transform.position, transform.TransformDirection (Vector3.forward) * 50f, Color.green);
 		if (Physics.Raycast (transform.position, transform.TransformDirection (Vector3.forward), out objectHit, 50.0f)) {
 			GameObject target = objectHit.collider.gameObject;
-			if (target.tag.StartsWith ("Obstacle1")) {
+			if (target.tag.StartsWith ("Obstacle")) {
 				//Debug.Log ("About to Collide with " + target.name + " Distance = " + Vector3.Distance (transform.position, target.transform.position) + " Speed = " + GameOptions.options.getGameSpeed());
 				if (Vector3.Distance (transform.position, target.transform.position) <= GameOptions.options.getGameSpeed () + 0.5f) {
-					//Debug.Log ("Collided with " + target.name);
-					//this.gameObject.SetActive (false);
-					//Destroy (this.gameObject);
-					//Time.timeScale = 0;
-					GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text>().enabled = true;
-				}
-			}
-			if (target.tag.Equals ("Obstacle2")) {
-				//Debug.Log ("About to Collide with " + target.name + " Distance = " + Vector3.Distance (transform.position, target.transform.position) + " Speed = " + GameOptions.options.getGameSpeed());
-				if (Vector3.Distance (transform.position, target.transform.position) <= GameOptions.options.getGameSpeed () + 1f) {
-					//Debug.Log ("Collided with " + target.name);
-					//this.gameObject.SetActive (false);
-					//Destroy (this.gameObject);
-					//Time.timeScale = 0;
-					GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text>().enabled = true;
+					if (GameOptions.options.isSpeedOn ()) {
+						target.gameObject.SetActive (false);
+						Destroy (target.gameObject);
+					} else if (!GameOptions.options.isSpeedOn () && GameOptions.options.isShieldOn ()) {
+						GameOptions.options.stopShieldOn ();
+						target.gameObject.SetActive (false);
+						Destroy (target.gameObject);
+					} else {
+						GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text> ().enabled = true;
+					}
 				}
 			}
 			if (target.tag.Equals ("Coin")) {
@@ -141,7 +136,29 @@ public class PlayerTest : MonoBehaviour {
 					target.SetActive (false);
 					Destroy (target.gameObject);
 					GameOptions.options.addCoinsToCollection (1);
+					GameOptions.options.addCoinsToThisRun (1);
 					//GameObject.FindGameObjectWithTag ("CoinsText").GetComponent<Text> ().text = "Coins: " + GameOptions.options.getCoinsCollected ();
+				}
+			}
+			if(target.tag.StartsWith("PowerUp")) {
+				if (Vector3.Distance (transform.position, target.transform.position) <= GameOptions.options.getGameSpeed () + 0.5f) {
+					if (target.tag.EndsWith ("Speed")) {
+						if (GameOptions.options.isSpeedOn()) {
+							target.gameObject.SetActive (false);
+							Destroy (target.gameObject);
+						} else {
+							GameOptions.options.startSpeedOn ();
+							Debug.Log ("Speed Power Up");
+							//GameObject.FindGameObjectWithTag ("ShieldSign").gameObject 
+							target.gameObject.SetActive (false);
+							Destroy (target.gameObject);
+						}
+					} else if (target.tag.EndsWith ("Shield")) {
+						GameOptions.options.startShieldOn ();
+						GameObject.Find ("Shield").GetComponent<Renderer>().enabled = true;
+					} else if (target.tag.EndsWith ("Magnet")) {
+					
+					}
 				}
 			}
 		}
