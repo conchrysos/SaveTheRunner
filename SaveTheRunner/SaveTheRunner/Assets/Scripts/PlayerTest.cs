@@ -6,7 +6,7 @@ public class PlayerTest : MonoBehaviour {
 	private bool isJumping;
 	private bool isMovingLeft;
 	private bool isMovingRight;
-	private int jumpWait, laneNo;
+	private int laneNo;
 	private float origY, prevPosY, prevPosXLeft, prevPosXRight, startTime, moveLength, speed;
 	private Vector3 startPosition;
 	private float[] moves;
@@ -27,7 +27,6 @@ public class PlayerTest : MonoBehaviour {
 		moves [2] = 1.0f;
 		laneNo = 1;
 		origY = transform.position.y;
-		jumpWait = 0;
 	}
 
 	// Update is called once per frame
@@ -123,7 +122,7 @@ public class PlayerTest : MonoBehaviour {
 					//Debug.Log ("Collided with " + target.name);
 					//this.gameObject.SetActive (false);
 					//Destroy (this.gameObject);
-					Time.timeScale = 0;
+					//Time.timeScale = 0;
 					GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text>().enabled = true;
 				}
 			}
@@ -133,7 +132,7 @@ public class PlayerTest : MonoBehaviour {
 					//Debug.Log ("Collided with " + target.name);
 					//this.gameObject.SetActive (false);
 					//Destroy (this.gameObject);
-					Time.timeScale = 0;
+					//Time.timeScale = 0;
 					GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text>().enabled = true;
 				}
 			}

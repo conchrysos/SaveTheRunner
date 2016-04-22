@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\PowerUpsCreator.cs" />
      <Compile Include="Assets\Scripts\Road.cs" />
      <Compile Include="Assets\Scripts\RoadCreator.cs" />
+     <Compile Include="Assets\Scripts\RoadCreatorOld.cs" />
      <None Include="Assets\Toon Zombie S\TSF\Shaders\TSFOutline.shader" />
      <None Include="Assets\Toon Zombie S\TSF\Shaders\TSF.shader" />
      <None Include="Assets\PowerUps Vol 1 Free\Readme.txt" />

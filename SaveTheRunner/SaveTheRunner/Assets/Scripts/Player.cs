@@ -6,7 +6,6 @@ public class Player : MonoBehaviour {
 	private bool isJumping;
 	private bool isMovingLeft;
 	private bool isMovingRight;
-	private int jumpWait;
 	private float origY, prevPosY, prevPosXLeft, prevPosXRight, startTime, moveLength, speed;
 	private Vector3 startPosition;
 	private RaycastHit objectHit;
@@ -21,7 +20,6 @@ public class Player : MonoBehaviour {
 		isMovingRight = false;
 		moveLength = 1.0f;
 		origY = transform.position.y;
-		jumpWait = 0;
 	}
 	
 	// Update is called once per frame

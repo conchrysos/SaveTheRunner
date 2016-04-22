@@ -2,44 +2,25 @@
 using System.Collections;
 
 public class RoadCreator : MonoBehaviour {
-	public GameObject roadPrefab;
-	private bool isCreating;
+	public GameObject road;
 	private int roadNo;
 
 	// Use this for initialization
 	void Start () {
-		isCreating = false;
-		roadNo = 0;
-		Object road1 = Instantiate (roadPrefab, new Vector3 (0, 0, 15), Quaternion.identity);
-		road1.name = "Road-" + roadNo.ToString ();
-		Object road2 = Instantiate (roadPrefab, new Vector3 (0, 0, roadPrefab.transform.position.z + 50.0f), Quaternion.identity);
-		roadNo++;
-		road2.name = "Road-" + roadNo.ToString ();
+		roadNo = 1;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		if (!GameOptions.options.getGameStarted ()) {
-			return;
-		}
 
-		GameObject road = GameObject.Find("Road-" + (roadNo - 1).ToString());
-		int no = int.Parse (road.name.Split (new char[] { '-'}) [1].ToString());
+	}
 
-		// Creates 2 instances of road
-		if (no % 3 == 0 && road.transform.position.z < 0.0f  && !isCreating) {
-			Object newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 100.0f - GameOptions.options.getGameSpeed()), Quaternion.identity);
+	void FixedUpdate() {
+		if(GameObject.FindGameObjectsWithTag("Road").Length < 6){	
+			Vector3 pos = new Vector3 (this.transform.position.x, this.transform.position.y, GameObject.Find ("Road-" + (roadNo - 1).ToString ()).transform.position.z + 50f);
+			GameObject roadObj = Instantiate (road, pos, /*((GameObject)Selection.activeObject)*/Quaternion.identity) as GameObject;
+			roadObj.name = "Road-" + roadNo.ToString ();
 			roadNo++;
-			newRoad.name = "Road-" + roadNo.ToString ();
-			newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 150.0f - GameOptions.options.getGameSpeed()), Quaternion.identity);
-			roadNo++;
-			newRoad.name = "Road-" + roadNo.ToString ();
-			newRoad = Instantiate (roadPrefab, new Vector3 (0, 0, road.transform.position.z + 200.0f - GameOptions.options.getGameSpeed()), Quaternion.identity);
-			roadNo++;
-			newRoad.name = "Road-" + roadNo.ToString ();
-			isCreating = true;
-		} else {
-			isCreating = false;
 		}
 	}
 }
