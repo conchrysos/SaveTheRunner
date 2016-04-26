@@ -148,14 +148,13 @@ public class PlayerTest : MonoBehaviour {
 							Destroy (target.gameObject);
 						} else {
 							GameOptions.options.startSpeedOn ();
-							Debug.Log ("Speed Power Up");
 							//GameObject.FindGameObjectWithTag ("ShieldSign").gameObject 
 							target.gameObject.SetActive (false);
 							Destroy (target.gameObject);
 						}
 					} else if (target.tag.EndsWith ("Shield")) {
 						GameOptions.options.startShieldOn ();
-						GameObject.Find ("Shield").GetComponent<Renderer>().enabled = true;
+						GameObject.FindGameObjectWithTag("ShieldSign").GetComponent<Renderer>().enabled = true;
 					} else if (target.tag.EndsWith ("Magnet")) {
 					
 					}

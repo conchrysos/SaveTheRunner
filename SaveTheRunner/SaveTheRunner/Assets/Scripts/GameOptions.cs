@@ -138,7 +138,6 @@ public class GameOptions : MonoBehaviour {
 		this.speedNow = this.gameSpeed;
 		this.speedTimeFinish = Time.time + (5 * PlayerPrefs.GetInt ("velocityLevel", 1));
 		this.gameSpeed = this.gameSpeed + (0.2f * PlayerPrefs.GetInt ("velocityLevel", 1));
-		Debug.Log ("Entered Speed On");
 	}
 
 	public bool isShieldOn() {
@@ -148,11 +147,10 @@ public class GameOptions : MonoBehaviour {
 	public void startShieldOn() {
 		this.shieldOn = true;
 		this.shieldTimeFinish = Time.time + (10 * PlayerPrefs.GetInt ("shieldLevel", 1));
-		Debug.Log ("Entered Shield On");
 	}
 
 	public void stopShieldOn() {
-		GameObject.Find ("Shield").GetComponent<Renderer>().enabled = false;
+		GameObject.FindGameObjectWithTag("ShieldSign").GetComponent<Renderer>().enabled = false;
 		this.shieldOn = false;
 	}
 }
