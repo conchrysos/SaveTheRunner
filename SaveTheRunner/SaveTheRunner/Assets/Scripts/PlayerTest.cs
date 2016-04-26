@@ -147,6 +147,7 @@ public class PlayerTest : MonoBehaviour {
 							target.gameObject.SetActive (false);
 							Destroy (target.gameObject);
 						} else {
+							GameObject.FindGameObjectWithTag("SpeedSign").GetComponent<Renderer>().enabled = true;
 							GameOptions.options.startSpeedOn ();
 							//GameObject.FindGameObjectWithTag ("ShieldSign").gameObject 
 							target.gameObject.SetActive (false);
@@ -156,7 +157,8 @@ public class PlayerTest : MonoBehaviour {
 						GameOptions.options.startShieldOn ();
 						GameObject.FindGameObjectWithTag("ShieldSign").GetComponent<Renderer>().enabled = true;
 					} else if (target.tag.EndsWith ("Magnet")) {
-					
+						GameOptions.options.startMagnetOn ();
+						GameObject.FindGameObjectWithTag("MagnetSign").GetComponent<Renderer>().enabled = true;
 					}
 				}
 			}

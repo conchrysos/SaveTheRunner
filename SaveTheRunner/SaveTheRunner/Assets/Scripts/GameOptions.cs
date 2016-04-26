@@ -62,6 +62,7 @@ public class GameOptions : MonoBehaviour {
 			if (Time.time > this.speedTimeFinish) {
 				this.gameSpeed = this.speedNow;
 				this.speedOn = false;
+				GameObject.FindGameObjectWithTag("SpeedSign").GetComponent<Renderer>().enabled = false;
 			}
 		}
 
@@ -71,7 +72,12 @@ public class GameOptions : MonoBehaviour {
 			}
 		}
 
-		Debug.Log("Speed = " + this.gameSpeed + " " + this.speedNow + " Shield is " + this.shieldOn);
+		if (this.magnetOn) {
+			if (Time.time > this.magnetTimeFinish) {
+				this.stopMagnetOn ();
+			}
+		}
+		//Debug.Log("Speed = " + this.gameSpeed + " " + this.speedNow + " Shield is " + this.shieldOn);
 
 	}
 
@@ -138,6 +144,7 @@ public class GameOptions : MonoBehaviour {
 		this.speedNow = this.gameSpeed;
 		this.speedTimeFinish = Time.time + (5 * PlayerPrefs.GetInt ("velocityLevel", 1));
 		this.gameSpeed = this.gameSpeed + (0.2f * PlayerPrefs.GetInt ("velocityLevel", 1));
+		GameObject.FindGameObjectWithTag("SpeedSign").GetComponent<Renderer>().enabled = true;
 	}
 
 	public bool isShieldOn() {
@@ -152,5 +159,19 @@ public class GameOptions : MonoBehaviour {
 	public void stopShieldOn() {
 		GameObject.FindGameObjectWithTag("ShieldSign").GetComponent<Renderer>().enabled = false;
 		this.shieldOn = false;
+	}
+
+	public bool isMagnetOn() {
+		return this.magnetOn;
+	}
+
+	public void startMagnetOn() {
+		this.magnetOn = true;
+		this.magnetTimeFinish = Time.time + (10 * PlayerPrefs.GetInt ("magnetLevel", 1));
+	}
+
+	public void stopMagnetOn() {
+		GameObject.FindGameObjectWithTag("MagnetSign").GetComponent<Renderer>().enabled = false;
+		this.magnetOn = false;
 	}
 }
