@@ -7,7 +7,7 @@ public class PlayerTest : MonoBehaviour {
 	private bool isMovingLeft;
 	private bool isMovingRight;
 	private int laneNo;
-	private float origY, prevPosY, prevPosXLeft, prevPosXRight, startTime, moveLength, speed;
+	private float origY, startTime, moveLength, speed;
 	private Vector3 startPosition;
 	private float[] moves;
 	private RaycastHit objectHit;
@@ -26,7 +26,7 @@ public class PlayerTest : MonoBehaviour {
 		moves [1] = 0.0f;
 		moves [2] = 1.0f;
 		laneNo = 1;
-		origY = transform.position.y;
+		origY = 0.1f;
 	}
 
 	// Update is called once per frame
@@ -45,8 +45,9 @@ public class PlayerTest : MonoBehaviour {
 			//if (transform.position.x < -1.0f) {
 			if (Mathf.Abs(transform.position.x - (startPosition + Vector3.left).x) == 0.0f) {
 				//				GetComponent<Rigidbody> ().velocity = Vector3.zero;
-				transform.position = new Vector3 (prevPosXLeft -1.0f, transform.position.y, transform.position.z);
+				transform.position = new Vector3 (moves[laneNo], transform.position.y, transform.position.z);
 				isMovingLeft = false;
+				Debug.Log("Moves Left laneNo = " + laneNo + " x = " + transform.position.x);
 			}
 		}
 
@@ -60,12 +61,12 @@ public class PlayerTest : MonoBehaviour {
 			//			GetComponent<Rigidbody> ().velocity = new Vector3(-1.0f, 0.0f, 0.0f) * 5.0f * GameOptions.options.getGameSpeed();
 			float distCovered = (Time.time - startTime) * 5.0f * speed;
 			float fracJourney = distCovered / moveLength;
-			transform.position = Vector3.Lerp(transform.position, new Vector3(startPosition.x - 1.0f, origY, transform.position.z), fracJourney);
+			transform.position = Vector3.Lerp(transform.position, new Vector3(moves[laneNo], origY, transform.position.z), fracJourney);
 			//Debug.Log ("MovesLeft");
 			//if (transform.position.x < -1.0f) {
-			if (Mathf.Abs(transform.position.x - (startPosition + Vector3.left).x) < 0.05f) {
+			if (Mathf.Abs(transform.position.x - (startPosition + Vector3.left).x) < 0.01f) {
 				//				GetComponent<Rigidbody> ().velocity = Vector3.zero;
-				transform.position = new Vector3 (prevPosXLeft -1.0f, transform.position.y, transform.position.z);
+				transform.position = new Vector3 (moves[laneNo], transform.position.y, transform.position.z);
 				isMovingLeft = false;
 				GetComponent<Rigidbody> ().isKinematic = false;
 			}
@@ -86,8 +87,9 @@ public class PlayerTest : MonoBehaviour {
 			//if (transform.position.x - prevPosXRight > 1.0f) {
 			if (Mathf.Abs(transform.position.x - (startPosition + Vector3.right).x) == 0.0f) {
 				//				GetComponent<Rigidbody> ().velocity = Vector3.zero;
-				transform.position = new Vector3 (prevPosXRight + 1.0f, transform.position.y, transform.position.z);
+				transform.position = new Vector3 (moves[laneNo], transform.position.y, transform.position.z);
 				isMovingRight = false;
+				Debug.Log("Moves Right laneNo = " + laneNo + " x = " + transform.position.x);
 			}
 		}
 
@@ -103,11 +105,11 @@ public class PlayerTest : MonoBehaviour {
 			float fracJourney = distCovered / moveLength;
 			//Debug.Log ("MovesRight");
 			//Debug.Log ("MOVES " + distCovered + "    " + fracJourney + " --- " + Mathf.Abs(transform.position.x - (startPosition + Vector3.right).x));
-			transform.position = Vector3.Lerp(transform.position, new Vector3(startPosition.x + 1.0f, origY, transform.position.z), fracJourney);
+			transform.position = Vector3.Lerp(transform.position, new Vector3(moves[laneNo], origY, transform.position.z), fracJourney);
 			//if (transform.position.x - prevPosXRight > 1.0f) {
-			if (Mathf.Abs(transform.position.x - (startPosition + Vector3.right).x) < 0.05f) {
+			if (Mathf.Abs(transform.position.x - (startPosition + Vector3.right).x) < 0.01f) {
 				//				GetComponent<Rigidbody> ().velocity = Vector3.zero;
-				transform.position = new Vector3 (prevPosXRight + 1.0f, transform.position.y, transform.position.z);
+				transform.position = new Vector3 (moves[laneNo], transform.position.y, transform.position.z);
 				isMovingRight = false;
 				GetComponent<Rigidbody> ().isKinematic = false;
 			}
@@ -163,34 +165,32 @@ public class PlayerTest : MonoBehaviour {
 				}
 			}
 		}
-	}
 
-	void FixedUpdate() {
-		if (Input.GetKeyDown (KeyCode.LeftArrow) && transform.position.x >= -0.5f){// && !isMovingLeft && !isMovingRight) {
-			prevPosXLeft = Mathf.Round(transform.position.x);
-			prevPosY = Mathf.Round(transform.position.y);
+		if (Input.GetKeyDown (KeyCode.LeftArrow) && laneNo != 0){// && transform.position.x >= -0.5f){// && !isMovingLeft && !isMovingRight) {
 			startPosition = transform.position;
 			speed = GameOptions.options.getGameSpeed ();
 			isMovingRight = false;
 			isMovingLeft = true;
 			startTime = Time.time;
+			Debug.Log ("LEFT 1 = " + laneNo);
 			laneNo--;
 			if (laneNo < 0)
 				laneNo = 0;
+			Debug.Log ("LEFT 2 = " + laneNo);
 			//transform.Translate(new Vector3 (-1.0f, 0.0f, 0.0f));
 		}
 
-		if (Input.GetKeyDown (KeyCode.RightArrow) && transform.position.x <= 0.5f){// && !isMovingLeft && !isMovingRight) {
-			prevPosXRight = Mathf.Round(transform.position.x);
-			prevPosY = Mathf.Round(transform.position.y);
+		if (Input.GetKeyDown (KeyCode.RightArrow) && laneNo != 2){// && transform.position.x <= 0.5f){// && !isMovingLeft && !isMovingRight) {
 			startPosition = transform.position;
 			speed = GameOptions.options.getGameSpeed ();
 			isMovingLeft = false;
 			isMovingRight = true;
 			startTime = Time.time;
+			Debug.Log ("RIGHT 1 = " + laneNo);
 			laneNo++;
 			if (laneNo > 2)
 				laneNo = 2;
+			Debug.Log ("RIGHT 2 = " + laneNo);
 		}
 
 		if (Input.GetKeyDown (KeyCode.UpArrow) && !isJumping) {
@@ -205,9 +205,14 @@ public class PlayerTest : MonoBehaviour {
 		}
 	}
 
+	void FixedUpdate() {
+		
+	}
+
 	void OnCollisionEnter(Collision other) {
 		if (other.gameObject.tag == "Road") {
 			//Debug.Log ("Collides with Ground");
+			GetComponent<Rigidbody> ().isKinematic = false;
 			isJumping = false;
 		}
 		if (other.gameObject.tag == "Obstacle1") {

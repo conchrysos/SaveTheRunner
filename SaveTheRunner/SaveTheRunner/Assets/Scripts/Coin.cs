@@ -27,7 +27,7 @@ public class Coin : MonoBehaviour {
 		if (isOnGround) {
 			if (GameOptions.options.isMagnetOn ()) {
 				transform.position = Vector3.MoveTowards (transform.position, player.transform.position, 2.0f *  GameOptions.options.getGameSpeed ());
-				Debug.Log ("apoelin");
+				//Debug.Log ("apoelin");
 				return;
 			}
 
@@ -44,7 +44,7 @@ public class Coin : MonoBehaviour {
 			Destroy (this.gameObject);
 			this.gameObject.SetActive (false);
 		} else if (other.gameObject.tag.Equals("MagnetSphere")) {
-			Debug.Log ("Is in sphere");
+			//Debug.Log ("Is in sphere");
 			isOnGround = true;
 		}
 	}

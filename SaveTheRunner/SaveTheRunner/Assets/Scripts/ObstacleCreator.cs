@@ -24,6 +24,9 @@ public class ObstacleCreator : MonoBehaviour {
 		if (no == randInt) {
 			randObject = (int)Mathf.Round(Random.Range (0.0f, obstacles.Length - 1));
 			Object obstacle = Instantiate (obstacles[randObject], new Vector3 (transform.position.x, transform.position.y - 0.3f, transform.position.z), Quaternion.identity);
+			if (randObject == 1) {
+				((GameObject) obstacle).transform.Rotate(new Vector3( -90f, 0f, 0f));
+			}
 			obstacle.name = "Obstacle" + randObject.ToString () + "-" + obstacleNo.ToString ();
 			randInt = (int)Mathf.Round(Random.Range (200.0f, 500.0f));
 			//Debug.Log ("Rand = " + randInt);
