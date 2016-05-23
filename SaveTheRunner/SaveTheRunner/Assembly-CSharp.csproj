@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Coin.cs" />
      <Compile Include="Assets\Scripts\CoinCreator.cs" />
      <Compile Include="Assets\Scripts\GameOptions.cs" />
+     <Compile Include="Assets\Scripts\GameOverMenu.cs" />
      <Compile Include="Assets\Scripts\House.cs" />
      <Compile Include="Assets\Scripts\HouseChooser.cs" />
      <Compile Include="Assets\Scripts\HouseCreator.cs" />
@@ -57,6 +58,7 @@
      <Compile Include="Assets\Scripts\Obstacle1.cs" />
      <Compile Include="Assets\Scripts\ObstacleCreator.cs" />
      <Compile Include="Assets\Scripts\Path.cs" />
+     <Compile Include="Assets\Scripts\PauseMenu.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\PlayerTest.cs" />
      <Compile Include="Assets\Scripts\Positioner.cs" />
@@ -65,6 +67,10 @@
      <Compile Include="Assets\Scripts\Road.cs" />
      <Compile Include="Assets\Scripts\RoadCreator.cs" />
      <Compile Include="Assets\Scripts\RoadCreatorOld.cs" />
+     <Compile Include="Assets\Scripts\Zombie.cs" />
+     <Compile Include="Assets\Scripts\ZombieCreator.cs" />
+     <Compile Include="Assets\Scripts\ZombiePrefab.cs" />
+     <Compile Include="Assets\ZombiePrefab.cs" />
      <None Include="Assets\Toon Zombie S\TSF\Shaders\TSFOutline.shader" />
      <None Include="Assets\Toon Zombie S\TSF\Shaders\TSF.shader" />
      <None Include="Assets\PowerUps Vol 1 Free\Readme.txt" />

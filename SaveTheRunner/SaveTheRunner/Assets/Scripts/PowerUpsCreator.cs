@@ -19,7 +19,7 @@ public class PowerUpsCreator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!GameOptions.options.getGameStarted ()) {
+		if (!GameOptions.options.getGameStarted () || GameOptions.options.isGamePaused() || GameOptions.options.isGameOver()) {
 			return;
 		}
 		if (no == randInt) {

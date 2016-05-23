@@ -22,22 +22,22 @@ public class CoinCreator : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	//void Update () {
 		
-	}
+	//}
 
-	void FixedUpdate() {
+	void Update() {
 		if (!GameOptions.options.getGameStarted ()) {
 			return;
 		}
 
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			isStarted = true;
-		}
+		//if (Input.GetKeyDown (KeyCode.Space)) {
+		//	isStarted = true;
+		//}
 
-		if (!isStarted) {
-			return;
-		}
+		//if (!isStarted) {
+		//	return;
+		//}
 
 		if (Mathf.Abs ((int)positioner.transform.position.z) < GameOptions.options.getCoinDistance()) {
 			no = GameOptions.options.getCoinDistance ();

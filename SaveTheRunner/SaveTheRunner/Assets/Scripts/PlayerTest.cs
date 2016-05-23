@@ -6,12 +6,13 @@ public class PlayerTest : MonoBehaviour {
 	private bool isJumping;
 	private bool isMovingLeft;
 	private bool isMovingRight;
+	private bool gameOver;
 	private int laneNo;
 	private float origY, startTime, moveLength, speed;
 	private Vector3 startPosition;
 	private float[] moves;
 	private RaycastHit objectHit;
-
+	private Animation anim;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,7 @@ public class PlayerTest : MonoBehaviour {
 		isJumping = false;
 		isMovingLeft = false;
 		isMovingRight = false;
+		gameOver = false;
 		moveLength = 1.0f;
 		moves = new float[3];
 		moves [0] = -1.0f;
@@ -27,10 +29,23 @@ public class PlayerTest : MonoBehaviour {
 		moves [2] = 1.0f;
 		laneNo = 1;
 		origY = 0.1f;
+		anim = GameObject.FindGameObjectWithTag("Max").GetComponent<Animation> ();
+		anim.Play ("idle");
 	}
 
 	// Update is called once per frame
 	void Update () {
+		if (!gameOver) {
+			if (GameOptions.options.isGameOver ()) {
+				anim ["death"].wrapMode = WrapMode.Once;
+				anim.Play ("death");
+				gameOver = true;
+				return;
+			}
+		} else {
+			return;
+		}
+
 		if (isMovingLeft && !isJumping) {
 			//transform.Translate (new Vector3 (-0.05f, 0.0f, 0.0f));
 			//if (i++ >= 19) {
@@ -64,7 +79,7 @@ public class PlayerTest : MonoBehaviour {
 			transform.position = Vector3.Lerp(transform.position, new Vector3(moves[laneNo], origY, transform.position.z), fracJourney);
 			//Debug.Log ("MovesLeft");
 			//if (transform.position.x < -1.0f) {
-			if (Mathf.Abs(transform.position.x - (startPosition + Vector3.left).x) < 0.01f) {
+			if (Mathf.Abs(transform.position.x - (startPosition + Vector3.left).x) < 0.05f) {
 				//				GetComponent<Rigidbody> ().velocity = Vector3.zero;
 				transform.position = new Vector3 (moves[laneNo], transform.position.y, transform.position.z);
 				isMovingLeft = false;
@@ -129,7 +144,9 @@ public class PlayerTest : MonoBehaviour {
 						target.gameObject.SetActive (false);
 						Destroy (target.gameObject);
 					} else {
-						GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text> ().enabled = true;
+						//GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text> ().enabled = true;
+						//TOFO GAMEOVER
+						GameOptions.options.endGame();
 					}
 				}
 			}
@@ -162,6 +179,11 @@ public class PlayerTest : MonoBehaviour {
 						GameOptions.options.startMagnetOn ();
 						GameObject.FindGameObjectWithTag("MagnetSign").GetComponent<Renderer>().enabled = true;
 					}
+				}
+			}
+			if (target.tag.Equals ("Zombie")) {
+				if (Vector3.Distance (transform.position, target.transform.position) <= GameOptions.options.getGameSpeed () + 0.5f) {
+					GameOptions.options.endGame ();
 				}
 			}
 		}
@@ -197,11 +219,13 @@ public class PlayerTest : MonoBehaviour {
 			//transform.position = transform.position + new Vector3 (transform.position.x, transform.position.y + 0.01f, transform.position.z);
 			//GetComponent<Rigidbody> ().isKinematic = false;
 			GetComponent<Rigidbody> ().AddForce (new Vector3 (0.0f, 1.0f, 0.0f) * 200.0f);
-			isJumping = true;	
+			isJumping = true;
+			anim.Play ("jump");
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space) && !GameOptions.options.getGameStarted()) {
 			GameOptions.options.setGameStarted (true);
+			anim.Play ("run");
 		}
 	}
 
@@ -214,6 +238,9 @@ public class PlayerTest : MonoBehaviour {
 			//Debug.Log ("Collides with Ground");
 			GetComponent<Rigidbody> ().isKinematic = false;
 			isJumping = false;
+			if (GameOptions.options.getGameStarted ()) {
+				anim.Play ("run");
+			}
 		}
 		if (other.gameObject.tag == "Obstacle1") {
 			//Debug.Log ("Collides with Obstacle1");

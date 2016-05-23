@@ -25,6 +25,8 @@ public class Buttons : MonoBehaviour {
 			PlayerPrefs.Save ();
 			PlayerPrefs.SetInt ("coins", 0);
 			PlayerPrefs.Save ();
+			PlayerPrefs.SetFloat ("score", 0.0f);
+			PlayerPrefs.Save ();
 		}
 
 		sound = PlayerPrefs.GetInt ("sound", 1);

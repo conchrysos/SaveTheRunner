@@ -8,6 +8,10 @@ public class GameOptions : MonoBehaviour {
 	private float gameSpeed = 0.2f;
 	private float speedChange = 0.0002f;
 	private float maxSpeed = 1.5f;
+	private float currentSpeed = 0.0f;
+	private float distanceCovered = 0.0f;
+	private float gameScoreThisRun = 0.0f;
+	private float gameScoreBest = 0.0f;
 	private float shieldTimeFinish = 0.0f;
 	private float magnetTimeFinish = 0.0f;
 	private float speedNow = 0.0f;
@@ -21,6 +25,8 @@ public class GameOptions : MonoBehaviour {
 	private bool shieldOn = false;
 	private bool magnetOn = false;
 	private bool speedOn = false;
+	private bool gamePaused = false;
+	private bool gameOver = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -28,33 +34,44 @@ public class GameOptions : MonoBehaviour {
 			DontDestroyOnLoad (this.gameObject);
 			options = this;
 			this.coinsCollected = PlayerPrefs.GetInt ("coins", 1);
+			this.gameScoreBest = PlayerPrefs.GetFloat ("score", 1);
 		} else if (options != this) {
 			Destroy (this.gameObject);
 		}
 	}
 
 	void Start() {
-		
+		this.coinsCollected = PlayerPrefs.GetInt ("coins", 1);
+		this.gameScoreBest = PlayerPrefs.GetFloat ("score", 1);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (SceneManager.GetActiveScene ().name.Equals ("Game")) {
-			GameObject.FindGameObjectWithTag ("CoinsText").GetComponent<Text> ().text = "Coins: " + coinsThisRun;
+			if (!this.gameOver && GameObject.FindGameObjectWithTag ("CoinsText") != null && GameObject.FindGameObjectWithTag ("DistanceText") != null) {
+				GameObject.FindGameObjectWithTag ("CoinsText").GetComponent<Text> ().text = "Coins: " + this.coinsThisRun;
+				GameObject.FindGameObjectWithTag ("DistanceText").GetComponent<Text> ().text = "Distance: " + this.distanceCovered;
+			}
 		} else if (SceneManager.GetActiveScene ().name.Equals ("MainMenu")) {
-			GameObject.FindGameObjectWithTag ("CoinsCollectedText").GetComponent<Text> ().text = "Coins: " + coinsCollected;
+			GameObject.FindGameObjectWithTag ("CoinsCollectedText").GetComponent<Text> ().text = "Coins: " + this.coinsCollected;
+			GameObject.FindGameObjectWithTag ("BestScoreText").GetComponent<Text> ().text = "Best Score: " + PlayerPrefs.GetFloat ("score", 1);
 		}
 		if (gameStarted) {
 			frameCount++;
 
-			if (gameStarted && gameSpeed < maxSpeed) {
-				//if (frameCount % frameChange == 0) {
-				if (!this.speedOn) {
-					gameSpeed = gameSpeed + speedChange;
+			if (this.gameOver != true) {
+				if (!this.gamePaused) {
+					if (gameStarted && gameSpeed < maxSpeed) {
+						//if (frameCount % frameChange == 0) {
+						if (!this.speedOn) {
+							gameSpeed = gameSpeed + speedChange;
+
+						}
+						distanceCovered = distanceCovered + gameSpeed;
+						//Debug.Log ("Distance = " + distanceCovered);
+						//}
+					}
 				}
-				
-					//Debug.Log ("Speed = " + gameSpeed);
-				//}
 			}
 		}
 
@@ -78,7 +95,6 @@ public class GameOptions : MonoBehaviour {
 			}
 		}
 		//Debug.Log("Speed = " + this.gameSpeed + " " + this.speedNow + " Shield is " + this.shieldOn);
-
 	}
 
 	public float getGameSpeed() {
@@ -127,12 +143,46 @@ public class GameOptions : MonoBehaviour {
 		this.coinsCollected -= coins;
 	}
 
+	public float getGameScore() {
+		this.gameScoreThisRun = this.distanceCovered + this.coinsThisRun;
+		return this.gameScoreThisRun;
+	}
+
+	public float getBestScore() {
+		this.gameScoreBest = (this.gameScoreBest > this.gameScoreThisRun) ? this.gameScoreBest : this.gameScoreThisRun;
+		PlayerPrefs.SetFloat ("score", this.gameScoreBest);
+		PlayerPrefs.Save ();
+		return this.gameScoreBest;
+	}
+
+	public float getDistanceCovered(){
+		return this.distanceCovered;
+	}
+
 	public void setGameStarted(bool start) {
 		this.gameStarted = start;
 	}
 
 	public bool getGameStarted() {
 		return this.gameStarted;
+	}
+
+	public bool isGameOver() {
+		return this.gameOver;
+	}
+
+	public void endGame(){
+		this.gameSpeed = 0.0f;
+		GameObject.FindGameObjectWithTag ("GameOverMenu").GetComponent<Animator> ().Play ("gameOverPanel");
+		GameObject.FindGameObjectWithTag ("CoinsEnd").GetComponent<Text> ().text = "Coins: " + this.getCoinsThisRun ();
+		GameObject.FindGameObjectWithTag ("DistanceEnd").GetComponent<Text> ().text = "Distance: " + this.getDistanceCovered ();
+		GameObject.FindGameObjectWithTag ("ScoreEnd").GetComponent<Text> ().text = "Score: " + this.getGameScore ();
+		GameObject.FindGameObjectWithTag ("BestScoreEnd").GetComponent<Text> ().text = "Best Score: " + this.getBestScore ();
+		GameObject.FindGameObjectWithTag ("DistanceText").SetActive (false);
+		GameObject.FindGameObjectWithTag ("CoinsText").SetActive (false);
+		GameObject.FindGameObjectWithTag ("PauseButton").SetActive (false);
+		this.gameOver = true;
+		Debug.Log ("GAME ENDED" + this.gameOver);
 	}
 
 	public bool isSpeedOn() {
@@ -173,5 +223,88 @@ public class GameOptions : MonoBehaviour {
 	public void stopMagnetOn() {
 		GameObject.FindGameObjectWithTag("MagnetSign").GetComponent<Renderer>().enabled = false;
 		this.magnetOn = false;
+	}
+
+	public void pauseGame() {
+		if (!this.gamePaused) {
+			GameObject.FindGameObjectWithTag ("PauseMenu").GetComponent<Animator> ().Play ("pausePanelDown");
+			this.gamePaused = true;
+			this.currentSpeed = this.gameSpeed;
+			this.gameSpeed = 0.0f;
+		} else {
+			GameObject.FindGameObjectWithTag ("PauseMenu").GetComponent<Animator> ().Play ("pausePanelUp");
+			this.gamePaused = false;
+			this.gameSpeed = this.currentSpeed;
+		}
+	}
+
+	public void resumeGame() {
+		GameObject.FindGameObjectWithTag ("PauseMenu").GetComponent<Animator> ().Play ("pausePanelUp");
+		this.gamePaused = false;
+		this.gameSpeed = this.currentSpeed;
+	}
+
+	public void restartLevel() {
+		gameSpeed = 0.2f;
+		speedChange = 0.0002f;
+		maxSpeed = 1.5f;
+		currentSpeed = 0.0f;
+		distanceCovered = 0.0f;
+		gameScoreThisRun = 0.0f;
+		gameScoreBest = PlayerPrefs.GetFloat ("score", 1);
+		shieldTimeFinish = 0.0f;
+		magnetTimeFinish = 0.0f;
+		speedNow = 0.0f;
+		speedTimeFinish = 0.0f;
+		frameCount = 0;
+		frameChange = 120;
+		coinDistance = 5;
+		coinsCollected = PlayerPrefs.GetInt ("coins", 1);
+		coinsThisRun = 0;
+		gameStarted = false;
+		shieldOn = false;
+		magnetOn = false;
+		speedOn = false;
+		gamePaused = false;
+		gameOver = false;
+		SceneManager.LoadScene (1);
+	}
+
+	public void goHome() {
+		gameSpeed = 0.2f;
+		speedChange = 0.0002f;
+		maxSpeed = 1.5f;
+		currentSpeed = 0.0f;
+		distanceCovered = 0.0f;
+		gameScoreThisRun = 0.0f;
+		gameScoreBest = PlayerPrefs.GetFloat ("score", 1);
+		shieldTimeFinish = 0.0f;
+		magnetTimeFinish = 0.0f;
+		speedNow = 0.0f;
+		speedTimeFinish = 0.0f;
+		frameCount = 0;
+		frameChange = 120;
+		coinDistance = 5;
+		coinsCollected = PlayerPrefs.GetInt ("coins", 1);
+		coinsThisRun = 0;
+		gameStarted = false;
+		shieldOn = false;
+		magnetOn = false;
+		speedOn = false;
+		gamePaused = false;
+		gameOver = false;
+		SceneManager.LoadScene (0);
+	}
+
+	public bool isGamePaused() {
+		return this.gamePaused;
+	}
+
+	public void setGamePause(bool pause){
+		this.gamePaused = pause;
+	}
+
+	public void exitGame(){
+		Application.Quit();
 	}
 }
