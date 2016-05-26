@@ -12,7 +12,7 @@ public class CoinCreator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		randInt1 = (int)Mathf.Round(Random.Range (3.0f, 50.0f));
-		randInt2 = (int)Mathf.Round(Random.Range (1000.0f, 3000.0f));
+		randInt2 = (int)Mathf.Round(Random.Range (500.0f, 2500.0f));
 		//Debug.Log ("Coins = " + randInt1 + " Frames = " + randInt2);
 		count = 0;
 		frames = 0;
@@ -51,7 +51,7 @@ public class CoinCreator : MonoBehaviour {
 			if (count++ == randInt1) {
 				
 				frames = 0;
-				randInt2 = (int)Mathf.Round (Random.Range (1000.0f, 3000.0f));
+				randInt2 = (int)Mathf.Round (Random.Range (500.0f, 2500.0f));
 				positioner.GetComponent<Positioner> ().setMove (false);
 				positioner.transform.position = Vector3.zero;
 				isProducing = false;
