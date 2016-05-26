@@ -13,6 +13,8 @@ public class PlayerTest : MonoBehaviour {
 	private float[] moves;
 	private RaycastHit objectHit;
 	private Animation anim;
+	public AudioClip coinSound;
+	public AudioClip jumpSound;
 
 	// Use this for initialization
 	void Start () {
@@ -152,9 +154,12 @@ public class PlayerTest : MonoBehaviour {
 			}
 			if (target.tag.Equals ("Coin")) {
 				if (Vector3.Distance (transform.position, target.transform.position) <= GameOptions.options.getGameSpeed () + 0.5f) {
+					if (PlayerPrefs.GetInt ("sound", 1) == 1) {
+						this.GetComponent<AudioSource> ().clip = coinSound;
+						this.GetComponent<AudioSource> ().Play ();
+					}
 					target.SetActive (false);
 					Destroy (target.gameObject);
-					GameOptions.options.addCoinsToCollection (1);
 					GameOptions.options.addCoinsToThisRun (1);
 					//GameObject.FindGameObjectWithTag ("CoinsText").GetComponent<Text> ().text = "Coins: " + GameOptions.options.getCoinsCollected ();
 				}
@@ -221,6 +226,10 @@ public class PlayerTest : MonoBehaviour {
 			GetComponent<Rigidbody> ().AddForce (new Vector3 (0.0f, 1.0f, 0.0f) * 200.0f);
 			isJumping = true;
 			anim.Play ("jump");
+			if (PlayerPrefs.GetInt ("sound", 1) == 1) {
+				this.GetComponent<AudioSource> ().clip = jumpSound;
+				this.GetComponent<AudioSource> ().Play ();
+			}
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space) && !GameOptions.options.getGameStarted()) {

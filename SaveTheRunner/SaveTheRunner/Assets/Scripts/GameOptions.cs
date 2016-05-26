@@ -95,6 +95,10 @@ public class GameOptions : MonoBehaviour {
 			}
 		}
 		//Debug.Log("Speed = " + this.gameSpeed + " " + this.speedNow + " Shield is " + this.shieldOn);
+
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Application.Quit ();
+		}
 	}
 
 	public float getGameSpeed() {
@@ -173,6 +177,8 @@ public class GameOptions : MonoBehaviour {
 
 	public void endGame(){
 		this.gameSpeed = 0.0f;
+		this.coinsThisRun = this.coinsThisRun + Mathf.RoundToInt (this.coinsThisRun * 0.5f * (PlayerPrefs.GetInt("coinsLevel", 1) - 1));
+		this.addCoinsToCollection (this.coinsThisRun);
 		GameObject.FindGameObjectWithTag ("GameOverMenu").GetComponent<Animator> ().Play ("gameOverPanel");
 		GameObject.FindGameObjectWithTag ("CoinsEnd").GetComponent<Text> ().text = "Coins: " + this.getCoinsThisRun ();
 		GameObject.FindGameObjectWithTag ("DistanceEnd").GetComponent<Text> ().text = "Distance: " + this.getDistanceCovered ();

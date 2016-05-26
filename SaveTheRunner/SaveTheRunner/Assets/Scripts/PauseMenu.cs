@@ -5,9 +5,10 @@ public class PauseMenu : MonoBehaviour {
 	private bool settings = false;
 	private bool musicPlays = false; 
 	private bool soundsPlays = false;
-	private GameObject sounds;
 	private GameObject musicOn;
 	private GameObject musicOff;
+	private GameObject soundsOn;
+	private GameObject soundsOff;
 	private GameObject camera;
 	private GameObject pauseButton;
 
@@ -15,11 +16,27 @@ public class PauseMenu : MonoBehaviour {
 	void Start () {
 		musicOn = GameObject.FindGameObjectWithTag ("MusicOn");
 		musicOff = GameObject.FindGameObjectWithTag ("MusicOff");
-		sounds = GameObject.FindGameObjectWithTag ("SoundsButton");
+		soundsOn = GameObject.FindGameObjectWithTag ("SoundsOn");
+		soundsOff = GameObject.FindGameObjectWithTag ("SoundsOff");
 		camera = GameObject.FindGameObjectWithTag ("MainCamera");
 		pauseButton = GameObject.FindGameObjectWithTag ("PauseButton");
-		musicPlays = (PlayerPrefs.GetInt ("sound", 1) == 1) ? true : false;
-		musicOff.SetActive(false);
+		musicPlays = (PlayerPrefs.GetInt ("music", 1) == 1) ? true : false;
+
+		if (PlayerPrefs.GetInt ("music", 1) == 1) {
+			musicOn.SetActive (true);
+			musicOff.SetActive (false);
+		} else {
+			musicOn.SetActive(false);
+			musicOff.SetActive(true);
+		}
+
+		if (PlayerPrefs.GetInt ("sound", 1) == 1) {
+			soundsOn.SetActive (true);
+			soundsOff.SetActive (false);
+		} else {
+			soundsOn.SetActive(false);
+			soundsOff.SetActive(true);
+		}
 	}
 	
 	// Update is called once per frame
@@ -62,23 +79,37 @@ public class PauseMenu : MonoBehaviour {
 
 	}
 
-	public void playSounds() {
-
-	}
-
 	public void playMusic(bool on) {
 		if (!on) {
 			musicPlays = true;
-			PlayerPrefs.SetInt ("sound", 1);
+			PlayerPrefs.SetInt ("music", 1);
+			PlayerPrefs.Save ();
 			camera.GetComponent<AudioSource> ().Play ();
 			musicOn.SetActive(true);
 			musicOff.SetActive(false);
 		} else {
 			musicPlays = false;
-			PlayerPrefs.SetInt ("sound", 0);
+			PlayerPrefs.SetInt ("music", 0);
+			PlayerPrefs.Save ();
 			camera.GetComponent<AudioSource> ().Stop ();
 			musicOn.SetActive(false);
 			musicOff.SetActive(true);
+		}
+	}
+
+	public void playSounds(bool on) {
+		if (!on) {
+			soundsPlays = true;
+			PlayerPrefs.SetInt ("sound", 1);
+			PlayerPrefs.Save ();
+			soundsOn.SetActive(true);
+			soundsOff.SetActive(false);
+		} else {
+			soundsPlays = false;
+			PlayerPrefs.SetInt ("sound", 0);
+			PlayerPrefs.Save ();
+			soundsOn.SetActive(false);
+			soundsOff.SetActive(true);
 		}
 	}
 }

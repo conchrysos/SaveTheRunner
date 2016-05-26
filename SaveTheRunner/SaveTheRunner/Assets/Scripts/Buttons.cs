@@ -4,9 +4,11 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class Buttons : MonoBehaviour {
-	int sound; //0 is off and 1 is on
-	public GameObject soundOnButton;
-	public GameObject soundOffButton;
+	int music, sounds; //0 is off and 1 is on
+	public GameObject musicOnButton;
+	public GameObject musicOffButton;
+	public GameObject soundsOnButton;
+	public GameObject soundsOffButton;
 	public GameObject powerUps;
 	public bool test;
 
@@ -27,22 +29,35 @@ public class Buttons : MonoBehaviour {
 			PlayerPrefs.Save ();
 			PlayerPrefs.SetFloat ("score", 0.0f);
 			PlayerPrefs.Save ();
+			PlayerPrefs.SetInt ("music", 1);
+			PlayerPrefs.Save ();
+			PlayerPrefs.SetInt ("sound", 1);
+			PlayerPrefs.Save ();
 		}
 
-		sound = PlayerPrefs.GetInt ("sound", 1);
+		music = PlayerPrefs.GetInt ("music", 1);
+		sounds = PlayerPrefs.GetInt ("sound", 1);
 
 		InitializeLevels ();
 
-		if (sound == 1) {
+		if (music == 1) {
 			Camera.main.GetComponent <AudioSource> ().Play ();
-			soundOffButton.SetActive (true);
-			soundOnButton.SetActive (false);
+			musicOffButton.SetActive (true);
+			musicOnButton.SetActive (false);
 		} 
 
 		else {
 			Camera.main.GetComponent <AudioSource> ().Stop ();
-			soundOffButton.SetActive (false);
-			soundOnButton.SetActive (true);
+			musicOffButton.SetActive (false);
+			musicOnButton.SetActive (true);
+		}
+
+		if (sounds == 1) {
+			soundsOffButton.SetActive (true);
+			soundsOnButton.SetActive (false);
+		} else {
+			soundsOffButton.SetActive (false);
+			soundsOnButton.SetActive (true);
 		}
 
 
@@ -189,12 +204,22 @@ public class Buttons : MonoBehaviour {
 		Application.Quit ();
 	}
 
-	public void SoundOn(){
+	public void musicOn(){
+		PlayerPrefs.SetInt ("music", 1);
+		PlayerPrefs.Save ();
+	}
+
+	public void musicOff(){
+		PlayerPrefs.SetInt ("music", 0);
+		PlayerPrefs.Save ();
+	}
+
+	public void soundsOn(){
 		PlayerPrefs.SetInt ("sound", 1);
 		PlayerPrefs.Save ();
 	}
 
-	public void SoundOff(){
+	public void soundOff(){
 		PlayerPrefs.SetInt ("sound", 0);
 		PlayerPrefs.Save ();
 	}

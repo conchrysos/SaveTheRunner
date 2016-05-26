@@ -51,8 +51,13 @@ public class Coin : MonoBehaviour {
 
 	void OnCollisionEnter(Collision other){
 		if (other.gameObject.tag.Equals ("Player")) {
+			
 			Destroy (this.gameObject);
 			this.gameObject.SetActive (false);
 		}
+	}
+
+	void OnDestroy() {
+		
 	}
 }
